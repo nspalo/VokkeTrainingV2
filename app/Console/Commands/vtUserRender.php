@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 use App\VokkeTraining\Classes\UserManagement;
 use App\VokkeTraining\Classes\CommandHelpers;
 
-class vtUserCreate extends Command
+class vtUserRender extends Command
 {
     use CommandHelpers;
     
@@ -17,10 +17,10 @@ class vtUserCreate extends Command
      *
      * @var string
      */
-    protected $signature = 'vokke:user:create
-                            {--username= : Set Username for the new User.}
-                            {--number= : Number of products to be created randomly.}';
-
+    protected $signature = 'vokke:user:show
+                            {--rand : Option to randomly show user.}
+                            {--uid= : Option to specify a user by providing its id.}';
+    
     /**
      * The console command description.
      *
@@ -46,8 +46,8 @@ class vtUserCreate extends Command
     public function handle()
     {
         // Get CLI Input
-        $args = $this->getInputFromCLI( $this->options(), ["username", "number"] );
-        
-        ( new UserManagement( $args ) )->create();
+        $args = $this->getInputFromCLI( $this->options(), ["rand", "uid"] );
+         //dd( $args, $this->options() );
+        ( new UserManagement( $args ) )->show();
     }
 }

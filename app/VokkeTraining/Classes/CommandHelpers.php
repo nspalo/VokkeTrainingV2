@@ -5,17 +5,19 @@ namespace App\VokkeTraining\Classes;
 trait CommandHelpers
 {
     private $dummyProducts = array(
-        "Phone",
+        "Laptop",
         "Tablet",
+        "Phone",
         "House",
+        "Table",
+        "Chair",
+        "Guitar",
+        "TV",
+        "Monitor",
         "Car",
         "Motorcycle",
-        "Guitar",
-        "Table",
-        "Laptop",
-        "Chair",
         "Wallet",
-        "Monitor",
+        "Keyboard"
     );
     
     public function getInputFromCLI( $argList, $argFilters )
@@ -38,5 +40,17 @@ trait CommandHelpers
     {
         $index = rand( 0, count($this->dummyProducts)-1);
         return $this->dummyProducts[ $index ];
+    }
+    
+    public function generateRandomProducts( $numberOfProduct )
+    {
+        $products = [];
+
+        for( $i = 0; $i < $numberOfProduct; $i++ )
+        {
+            array_push( $products, $this->getDummyProduct() );
+        }
+
+        return $products;
     }
 }
