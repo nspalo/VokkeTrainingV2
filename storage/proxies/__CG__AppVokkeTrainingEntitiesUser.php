@@ -66,10 +66,10 @@ class User extends \App\VokkeTraining\Entities\User implements \Doctrine\ORM\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'name', 'products'];
+            return ['__isInitialized__', 'id', 'name', '' . "\0" . 'App\\VokkeTraining\\Entities\\User' . "\0" . 'address', 'products'];
         }
 
-        return ['__isInitialized__', 'id', 'name', 'products'];
+        return ['__isInitialized__', 'id', 'name', '' . "\0" . 'App\\VokkeTraining\\Entities\\User' . "\0" . 'address', 'products'];
     }
 
     /**

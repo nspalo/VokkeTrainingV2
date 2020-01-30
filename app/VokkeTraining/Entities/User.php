@@ -3,6 +3,7 @@
 namespace App\VokkeTraining\Entities;
 
 // Doctrine
+
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -10,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 // Laravel
 use App\VokkeTraining\Entities\Product;
+// use App\VokkeTraining\Embeddables\Address;
 
 /**
  * @ORM\Entity
@@ -30,6 +32,12 @@ class User
     protected $name;
 
     /**
+     * @ORM\Embedded(class="use App\VokkeTraining\Embeddables\Address")
+     * @var Address
+     */
+    private $address;
+
+    /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="user", cascade={"persist"})
      * @JoinColumn(name="id", referencedColumnName="id")
      * @var ArrayCollection|Product[]
@@ -43,8 +51,9 @@ class User
      */
     public function __construct( $name )
     {
-        $this->name = $name;
+        $this->name     = $name;
         $this->products = new ArrayCollection;
+        $this->address  = new Address();
     }
 
     /**

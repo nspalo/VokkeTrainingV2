@@ -21,7 +21,7 @@ class Product
 {
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="products")
-     *  @JoinColumn(name="user_id", referencedColumnName="id")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
      * @var User
      */
     protected $user;
