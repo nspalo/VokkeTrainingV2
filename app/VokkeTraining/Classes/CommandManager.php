@@ -111,7 +111,9 @@ class CommandManager
         $user       = $this->getUser( $user_id );
         $product_id = ( ! is_null( $product_id ) ) ? $product_id : $this->getRandomProductId( $user );
 
+        //dd($user, $product_id);
         $product = $this->getProduct( $product_id );
+
         EntityManager::remove($product);
         EntityManager::flush();
     }
@@ -250,12 +252,12 @@ class CommandManager
         if( ! is_null( $product_id ) )
         {
             $product = $this->getProduct( $product_id );
-            $category->addProduct( $product );
+            $product->addCategory( $category );
+            //$category->addProduct( $product );
         }
 
         EntityManager::persist( $category );
         EntityManager::flush();
-
     }
 
     public function removeCategory( $category_id )
@@ -263,6 +265,35 @@ class CommandManager
         $category = $this->getCategory( $category_id );
         EntityManager::remove($category);
         EntityManager::flush();
+    }
+
+    public function updateCategory( $category_id, $category_name, $product_id )
+    {
+        /** @var Category $category */
+        $category = $this->getCategory( $category_id );
+
+        if( ! is_null( $category ) )
+        {
+            if( ! is_null( $category_name ))
+            {
+                $category->setName( $category_name );
+            }
+
+            if( ! is_null( $product_id ) )
+            {
+                $product = $this->getProduct( $product_id );
+                $product->addCategory( $category );
+//                $category->addProduct( $product );
+//                $product->addCategory( $category );
+                //EntityManager::persist( $product );
+            }
+
+        }
+
+        EntityManager::persist( $category );
+        EntityManager::flush();
+
+//        dd( $category );
     }
 
 }

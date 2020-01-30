@@ -21,7 +21,7 @@ use App\VokkeTraining\Entities\Product;
 class Category
 {
     /**
-     * @ORM\ManyToMany(targetEntity="Product", inversedBy="category")
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="category" )
      * @var ArrayCollection|Product[]
      */
     protected $products;
@@ -76,6 +76,7 @@ class Category
     {
         if( ! $this->products->contains( $product ) )
         {
+            $this->product->addCategory($category);
             $this->products[] = $product;
             //$product->addCategory( $this );
         }

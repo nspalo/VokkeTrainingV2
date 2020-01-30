@@ -27,7 +27,7 @@ class Product
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Category", mappedBy="product", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="product", cascade={"persist"})
      * @var ArrayCollection|Category[]
      */
     protected $categories;
@@ -100,8 +100,7 @@ class Product
     {
         if( ! $this->categories->contains( $category ) )
         {
-            //$category->setUser($this);
-            $this->categories->addProduct($category);
+            //$this->categories->addProduct($category);
             $this->categories[] = $category;
         }
     }

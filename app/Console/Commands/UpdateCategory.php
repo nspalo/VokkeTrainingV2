@@ -7,22 +7,24 @@ use Illuminate\Console\Command;
 // Vokke Training
 use App\VokkeTraining\Classes\CommandManager;
 
-class RemoveCategory extends Command
+class UpdateCategory extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'remove:category
-                            {--cid= : Id of the category you want to delete.}';
+    protected $signature = 'update:category
+                            {--cid= : Id of category that you want to update.}
+                            {--name= : Set value to update name of the category.}
+                            {--pid= : Id of new product that you want it to be assigned.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Command to update category';
 
     /**
      * Create a new command instance.
@@ -41,11 +43,11 @@ class RemoveCategory extends Command
      */
     public function handle()
     {
-        //
-         $category_id = $this->option("cid");
-//        $product_id = $this->option("pid");
+        $category_id   = $this->option("cid");
+        $category_name = $this->option("name");
+        $product_id    = $this->option("pid");
 
         // Create Product for a User
-        ( new CommandManager() )->removeCategory( $category_id );
+        ( new CommandManager() )->updateCategory( $category_id, $category_name, $product_id );
     }
 }
