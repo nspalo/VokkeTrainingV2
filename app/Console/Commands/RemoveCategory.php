@@ -4,7 +4,10 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class DeleteCategory extends Command
+// Vokke Training
+use App\VokkeTraining\Classes\CommandManager;
+
+class RemoveCategory extends Command
 {
     /**
      * The name and signature of the console command.
@@ -39,5 +42,10 @@ class DeleteCategory extends Command
     public function handle()
     {
         //
+         $category_id = $this->option("cid");
+//        $product_id = $this->option("pid");
+
+        // Create Product for a User
+        ( new CommandManager() )->removeCategory( $category_id );
     }
 }

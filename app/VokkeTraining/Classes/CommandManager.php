@@ -27,9 +27,10 @@ class CommandManager
     );
 
     private $dummyCategories = [
-        "Category 1",
-        "Category 2",
-        "Category 3",
+        "consumer",
+        "convenience",
+        "shopping",
+        "specialty",
     ];
 
     /**
@@ -209,6 +210,30 @@ class CommandManager
         return new Category( $categoryName );
     }
 
+    private function getCategoryAll()
+    {
+        return EntityManager::getRepository(Category::class)->findAll();
+    }
+
+    private function getCategory( $category_id )
+    {
+        return EntityManager::getRepository(Category::class)->find( $category_id );
+    }
+
+    private function getCategoryLastId()
+    {
+        $category_ids = [];
+        $categories = $this->getCategoryAll();
+
+        /** @var Category $category */
+        foreach( $categories as $category )
+        {
+            array_push( $category_ids, $category->getId() );
+        }
+
+        return ( 0 == count( $category_ids ) ) ? 1 :  max( $category_ids ) + 1;
+    }
+
     private function getDummyCategory()
     {
         $index = rand( 0, count($this->dummyCategories) - 1 );
@@ -217,11 +242,11 @@ class CommandManager
 
     public function manageCategory( $product_id )
     {
-        $categoryName = $this->getDummyCategory();
+        $categoryLastId = $this->getCategoryLastId();
+        $categoryName = "Cat: " .  $categoryLastId  . " - " . $this->getDummyCategory();
 
         $category = $this->createCategory( $categoryName );
 
-        //dump( $product_id );
         if( ! is_null( $product_id ) )
         {
             $product = $this->getProduct( $product_id );
@@ -231,6 +256,13 @@ class CommandManager
         EntityManager::persist( $category );
         EntityManager::flush();
 
+    }
+
+    public function removeCategory( $category_id )
+    {
+        $category = $this->getCategory( $category_id );
+        EntityManager::remove($category);
+        EntityManager::flush();
     }
 
 }
