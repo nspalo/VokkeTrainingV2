@@ -1,22 +1,31 @@
 <?php
 
+
 namespace App\VokkeTraining\Entities;
 
 // Doctrine
 use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\ORM\Mapping\OneToMany;
+//use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\Common\Collections\ArrayCollection;
 
 // Laravel
 use App\VokkeTraining\Entities\Product;
 
+
 /**
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\Table(name="category")
  */
-class User
+class Category
 {
+    /**
+     * @ORM\ManyToMany(targetEntity="Product", inversedBy="category")
+     * @var ArrayCollection|Product[]
+     */
+    protected $products;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -30,16 +39,8 @@ class User
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="user", cascade={"persist"})
-     * @JoinColumn(name="id", referencedColumnName="id")
-     * @var ArrayCollection|Product[]
-     */
-    protected $products;
-
-    /**
-     * User constructor.
+     * Category constructor.
      * @param $name
-     * @param $products
      */
     public function __construct( $name )
     {
@@ -75,8 +76,8 @@ class User
     {
         if( ! $this->products->contains( $product ) )
         {
-            $product->setUser($this);
-            $this->products->add($product);
+            $this->products[] = $product;
+            //$product->addCategory( $this );
         }
     }
 
@@ -87,6 +88,4 @@ class User
     {
         return $this->products;
     }
-
-
 }

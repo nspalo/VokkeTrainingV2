@@ -4,12 +4,14 @@ namespace App\VokkeTraining\Entities;
 
 // Doctrine
 use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\ORM\Mapping\ManyToOne;
-// use Doctrine\ORM\Mapping\ManyToMany;
+//use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\Common\Collections\ArrayCollection;
 
 // Laravel
+use App\VokkeTraining\Entities\User;
+use App\VokkeTraining\Entities\Category;
 
 /**
  * @ORM\Entity
@@ -23,6 +25,12 @@ class Product
      * @var User
      */
     protected $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="product", cascade={"persist"})
+     * @var ArrayCollection|Category[]
+     */
+    protected $categories;
 
     /**
      * @ORM\Id
@@ -45,6 +53,7 @@ class Product
     public function __construct($name)
     {
         $this->name = $name;
+        $this->categories = new ArrayCollection;
     }
 
     /**
@@ -85,5 +94,15 @@ class Product
     public function setName($name): void
     {
         $this->name = $name;
+    }
+
+    public function addCategory( Category $category )
+    {
+        if( ! $this->categories->contains( $category ) )
+        {
+            //$category->setUser($this);
+            $this->categories->addProduct($category);
+            $this->categories[] = $category;
+        }
     }
 }

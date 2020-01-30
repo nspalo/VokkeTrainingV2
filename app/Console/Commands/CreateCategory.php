@@ -2,29 +2,28 @@
 
 namespace App\Console\Commands;
 
-// Laravel
 use Illuminate\Console\Command;
 
 // Vokke Training
 use App\VokkeTraining\Classes\CommandManager;
 
-class CreateProduct extends Command
+class CreateCategory extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'create:product
-                            {--uid= : User\'s id where the product is going to be added.}
-                            {--product= : Name of the product to be added.}';
+    protected $signature = 'create:category
+                            {--cid= : Category\'s id to be added.}
+                            {--pid= : Product\'s id where the category is going to be added.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'An artisan command that adds a product to a user.';
+    protected $description = 'Command to create category and to add it product';
 
     /**
      * Create a new command instance.
@@ -44,11 +43,11 @@ class CreateProduct extends Command
     public function handle()
     {
         // Get CLI Input
-        $user_id     = $this->option("uid");
-        $productName = $this->option("product");
+        //  $category = $this->argument("category");
+        // $category_id = $this->option("cid");
+        $product_id = $this->option("pid");
 
         // Create Product for a User
-        ( new CommandManager() )->addProductToUser( $user_id, $productName );
+        ( new CommandManager() )->manageCategory( $product_id );
     }
-
 }

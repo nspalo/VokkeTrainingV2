@@ -8,6 +8,7 @@ use EntityManager;
 // VokkeTraining
 use App\VokkeTraining\Entities\User;
 use App\VokkeTraining\Entities\Product;
+use App\VokkeTraining\Entities\Category;
 
 class CommandManager
 {
@@ -24,6 +25,12 @@ class CommandManager
         "Wallet",
         "Monitor",
     );
+
+    private $dummyCategories = [
+        "Category 1",
+        "Category 2",
+        "Category 3",
+    ];
 
     /**
      * CommandManager constructor.
@@ -103,7 +110,7 @@ class CommandManager
         $user       = $this->getUser( $user_id );
         $product_id = ( ! is_null( $product_id ) ) ? $product_id : $this->getRandomProductId( $user );
 
-        $product = EntityManager::find( Product::class, $product_id );
+        $product = $this->getProduct( $product_id );
         EntityManager::remove($product);
         EntityManager::flush();
     }
@@ -132,6 +139,31 @@ class CommandManager
     private function createProduct( $productName )
     {
         return new Product( $productName );
+    }
+
+    private function getProduct( $product_id )
+    {
+//        $product = EntityManager::getRepository(User::class)->find( 1 );
+        $product = EntityManager::getRepository(Product::class)->find( $product_id );
+
+        return $product;
+        //return EntityManager::getRepository(Product::class)->find( $product_id );
+    }
+
+    private function getUserIdFromProduct( $product_id )
+    {
+        /** @var Product $product */
+        $product = $this->getProduct( $product_id );
+
+        /** @var Product $product */
+        $user = $product->getUser();
+
+        return $user->getId();
+    }
+
+    private function getUserProduct( $user_id, $product_id )
+    {
+        //return EntityManager::getRepository(Product::class)->find( $product_id );
     }
 
     private function getDummyProduct()
@@ -169,6 +201,36 @@ class CommandManager
 
         // randomly get all possible product id from the user
         return $product_ids[ rand( 0, count($product_ids)-1) ];
+    }
+
+    // Category
+    private function createCategory( $categoryName )
+    {
+        return new Category( $categoryName );
+    }
+
+    private function getDummyCategory()
+    {
+        $index = rand( 0, count($this->dummyCategories) - 1 );
+        return $this->dummyCategories[ $index ];
+    }
+
+    public function manageCategory( $product_id )
+    {
+        $categoryName = $this->getDummyCategory();
+
+        $category = $this->createCategory( $categoryName );
+
+        //dump( $product_id );
+        if( ! is_null( $product_id ) )
+        {
+            $product = $this->getProduct( $product_id );
+            $category->addProduct( $product );
+        }
+
+        EntityManager::persist( $category );
+        EntityManager::flush();
+
     }
 
 }
