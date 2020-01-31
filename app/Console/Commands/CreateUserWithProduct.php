@@ -2,13 +2,12 @@
 
 namespace App\Console\Commands;
 
-// Laravel
 use Illuminate\Console\Command;
 
 // Vokke Training
 use App\VokkeTraining\Classes\CommandManager;
 
-class CreateUser extends Command
+class CreateUserWithProduct extends Command
 {
     /**
      * The name and signature of the console command.
@@ -17,11 +16,8 @@ class CreateUser extends Command
      */
     protected $signature = 'create:user
                             {user : Name of the new User.}
-                            {street}
-                            {city}
-                            {country}
-                            {postal_code}
-                            ';
+                            
+                            {--number= : Number of products to be created randomly.}';
 
     /**
      * The console command description.
@@ -49,15 +45,11 @@ class CreateUser extends Command
     {
         // Get CLI Input
         $username = $this->argument('user');
-        $address  = [
-            "street"      => $this->argument('street'),
-            "city"        => $this->argument('city'),
-            "country"     => $this->argument('country'),
-            "postal_code" => $this->argument('postal_code'),
-        ];
+        $number   = $this->option("number");
 
+        //address_street, address_postal_code, address_city, address_country
 
         // Create User and Product
-        ( new CommandManager() )->createUser( $username, $address );
+        ( new CommandManager() )->createUserWithProduct( $username, $number );
     }
 }

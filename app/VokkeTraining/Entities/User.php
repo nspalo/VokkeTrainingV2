@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 // Laravel
 use App\VokkeTraining\Entities\Product;
-// use App\VokkeTraining\Embeddables\Address;
+use App\VokkeTraining\Embeddables\Address;
 
 /**
  * @ORM\Entity
@@ -32,8 +32,8 @@ class User
     protected $name;
 
     /**
-     * @ORM\Embedded(class="use App\VokkeTraining\Embeddables\Address")
-     * @var Address
+     * @ORM\Embedded(class="App\VokkeTraining\Embeddables\Address")
+     * @var Address\Address
      */
     private $address;
 
@@ -95,6 +95,14 @@ class User
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * @return Address\Address
+     */
+    public function getAddress(): Address
+    {
+        return $this->address;
     }
 
 }

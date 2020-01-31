@@ -8,29 +8,23 @@ use Illuminate\Console\Command;
 use App\VokkeTraining\Classes\UserManagement;
 use App\VokkeTraining\Classes\CommandHelpers;
 
-class vtUserCreate extends Command
+class vtUserDelete extends Command
 {
     use CommandHelpers;
-    
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'vokke:user:create
-                            {--name= : Set User name for the new User.}
-                            {--street= : Set Street.}
-                            {--city= : Set city}
-                            {--country= : Set country}
-                            {--postal_code= : Set postal_code}
-                            ';
+    protected $signature = 'vokke:user:delete {--uid= : User Id to delete.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command to create a user';
+    protected $description = 'Command to delete a user';
 
     /**
      * Create a new command instance.
@@ -50,8 +44,8 @@ class vtUserCreate extends Command
     public function handle()
     {
         // Get CLI Input
-        $args = $this->getInputFromCLI( $this->options(), ["name", "street", "city", "country", "postal_code"] );
+        $args = $this->getInputFromCLI( $this->options(), ["uid"] );
 
-        ( new UserManagement( $args ) )->create();
+        ( new UserManagement( $args ) )->delete();
     }
 }

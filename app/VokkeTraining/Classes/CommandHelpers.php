@@ -32,7 +32,8 @@ trait CommandHelpers
             $args[ $filter ] = $argList[ $filter ];
           }
         }
-      }      
+      }
+
       return $args;
     }
     

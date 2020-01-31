@@ -42,7 +42,7 @@ class CommandManager
     }
 
     // User
-    public function createUserAndProduct( $username, $number)
+    public function createUserWithProduct($username, $number)
     {
         $products  = $this->generateRandomProducts( $number );
         $user      = $this->createUser( $username );
@@ -57,8 +57,9 @@ class CommandManager
         EntityManager::flush();
     }
 
-    private function createUser( $username )
+    private function createUser( $username, $address )
     {
+        dd( $address );
         return new User( $username );
     }
 

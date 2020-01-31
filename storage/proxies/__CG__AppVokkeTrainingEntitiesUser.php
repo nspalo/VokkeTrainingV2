@@ -235,4 +235,15 @@ class User extends \App\VokkeTraining\Entities\User implements \Doctrine\ORM\Pro
         return parent::getProducts();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getAddress(): \App\VokkeTraining\Embeddables\Address
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAddress', []);
+
+        return parent::getAddress();
+    }
+
 }
