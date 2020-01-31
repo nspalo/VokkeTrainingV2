@@ -4,23 +4,15 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-// VokkeTraining
-use App\VokkeTraining\Classes\UserManagement;
-use App\VokkeTraining\Helpers\CommandHelpers;
-
-class vtUserRender extends Command
+class vtUserUpdate extends Command
 {
-    use CommandHelpers;
-    
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'vokke:user:show
-                            {--rand : Option to randomly show user.}
-                            {--uid= : Option to specify a user by providing its id.}';
-    
+    protected $signature = 'command:name';
+
     /**
      * The console command description.
      *
@@ -45,9 +37,6 @@ class vtUserRender extends Command
      */
     public function handle()
     {
-        // Get CLI Input
-        $args = $this->getInputFromCLI( $this->options(), ["rand", "uid"] );
-         //dd( $args, $this->options() );
-        ( new UserManagement( $args ) )->show();
+        //
     }
 }

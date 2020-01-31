@@ -1,6 +1,6 @@
 <?php
 
-namespace App\VokkeTraining\Classes;
+namespace App\VokkeTraining\Helpers;
 
 trait CommandHelpers
 {

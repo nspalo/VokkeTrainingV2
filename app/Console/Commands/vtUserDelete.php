@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 // VokkeTraining
 use App\VokkeTraining\Classes\UserManagement;
-use App\VokkeTraining\Classes\CommandHelpers;
+use App\VokkeTraining\Helpers\CommandHelpers;
 
 class vtUserDelete extends Command
 {

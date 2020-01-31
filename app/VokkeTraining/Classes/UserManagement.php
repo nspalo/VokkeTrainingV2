@@ -3,13 +3,14 @@
 namespace App\VokkeTraining\Classes;
 
 // Doctrine
-use App\VokkeTraining\Embeddables\Address;
 use EntityManager;
 
 // VokkeTraining
+use App\VokkeTraining\Helpers\CommandHelpers;
 use App\VokkeTraining\Classes\IEntityManagement;
 use App\VokkeTraining\Entities\User;
 use App\VokkeTraining\Entities\Product;
+use App\VokkeTraining\Embeddables\Address;
 
 class UserManagement implements IEntityManagement
 {
