@@ -37,9 +37,11 @@ class User
      */
     private $address;
 
+    // @joinColumn onDelete="restrict"
+    // @joinColumn onDelete="set null"
     /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="user", cascade={"persist"})
-     * @JoinColumn(name="id", referencedColumnName="id")
+     * @JoinColumn(name="user_id", referencedColumnName="id", onDelete="restrict")
      * @var ArrayCollection|Product[]
      */
     protected $products;

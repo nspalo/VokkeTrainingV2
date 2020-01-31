@@ -4,21 +4,22 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+
 // VokkeTraining
 use App\VokkeTraining\Classes\ProductManagement;
 use App\VokkeTraining\Helpers\CommandHelpers;
 
-class vtProductCreate extends Command
+class vtProductAssign extends Command
 {
     use CommandHelpers;
-
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'vokke:product:create
-                            {--name= : Set Product name for the new Product.}
+    protected $signature = 'vokke:product:assign
+                            {--pid= : product id of the product to assign.}
+                            {--uid= : user id where the product is going to assign.}
                             ';
 
     /**
@@ -45,8 +46,10 @@ class vtProductCreate extends Command
      */
     public function handle()
     {
+        dd("STP");
         // Get CLI Input
-        $args = $this->getInputFromCLI( $this->options(), ["name"] );
-        ( new ProductManagement( $args ) )->create();
+        $args = $this->getInputFromCLI( $this->options(), ["pid", "uid"] );
+
+        ( new ProductManagement( $args ) )->assignProduct();
     }
 }

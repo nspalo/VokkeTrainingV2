@@ -8,25 +8,22 @@ use Illuminate\Console\Command;
 use App\VokkeTraining\Classes\ProductManagement;
 use App\VokkeTraining\Helpers\CommandHelpers;
 
-class vtProductCreate extends Command
+class vtProductDelete extends Command
 {
-    use CommandHelpers;
-
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'vokke:product:create
-                            {--name= : Set Product name for the new Product.}
-                            ';
+    protected $signature = 'vokke:product:assign
+                            {--pid= : product id of the product to delete.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Command to delete product';
 
     /**
      * Create a new command instance.
@@ -45,8 +42,9 @@ class vtProductCreate extends Command
      */
     public function handle()
     {
+
         // Get CLI Input
-        $args = $this->getInputFromCLI( $this->options(), ["name"] );
-        ( new ProductManagement( $args ) )->create();
+        $args = $this->getInputFromCLI( $this->options(), ["pid"] );
+        ( new ProductManagement( $args ) )->delete();
     }
 }

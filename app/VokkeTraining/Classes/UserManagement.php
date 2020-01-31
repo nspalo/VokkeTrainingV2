@@ -69,13 +69,13 @@ class UserManagement implements IEntityManagement
         return $user;
     }
 
-    private function get()
+    public function get()
     {
         $user_id = $this->getUserId();
         return EntityManager::getRepository(User::class)->find( $user_id );
     }
 
-    private function getAll()
+    public function getAll()
     {
         return EntityManager::getRepository(User::class)->findAll();
     }
