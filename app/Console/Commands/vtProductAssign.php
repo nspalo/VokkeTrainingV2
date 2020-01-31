@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-
 // VokkeTraining
 use App\VokkeTraining\Classes\ProductManagement;
 use App\VokkeTraining\Helpers\CommandHelpers;
@@ -21,7 +20,6 @@ class vtProductAssign extends Command
                             {--pid= : product id of the product to assign.}
                             {--uid= : user id where the product is going to assign.}
                             ';
-
     /**
      * The console command description.
      *
@@ -46,7 +44,6 @@ class vtProductAssign extends Command
      */
     public function handle()
     {
-        dd("STP");
         // Get CLI Input
         $args = $this->getInputFromCLI( $this->options(), ["pid", "uid"] );
 

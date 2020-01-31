@@ -93,14 +93,12 @@ class ProductManagement implements IEntityManagement
 
     public function assignProduct()
     {
-        dd("TEST");
         $user    = ( new UserManagement( $this->args ) )->get();
         $product = $this->get();
 
-//        $user->addProduct( $product );
-//
-//        EntityManager::persist( $product );
-//        EntityManager::flush();
+        $user->addProduct( $product );
+        EntityManager::persist( $product );
+        EntityManager::flush();
     }
 
 }
