@@ -36,7 +36,7 @@ class UserManagement implements IEntityManagement
 
         return rand( 1, count($user_ids) - 1 );
     }
-    
+
     private function getUserId()
     {
         if( ( array_key_exists( "rand", $this->args ) ? $this->args["rand"] : false ) )
