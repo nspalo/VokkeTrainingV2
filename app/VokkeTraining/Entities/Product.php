@@ -19,9 +19,11 @@ use App\VokkeTraining\Entities\Category;
  */
 class Product
 {
+    // @joinColumn: onDelete="restrict"
+    // @joinColumn: onDelete="set null"
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="products")
-     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * @JoinColumn(name="user_id", referencedColumnName="id", onDelete="set null")
      * @var User
      */
     protected $user;
@@ -103,5 +105,10 @@ class Product
             //$this->categories->addProduct($category);
             $this->categories[] = $category;
         }
+    }
+
+    public function deleteUser()
+    {
+        unset( $this->user );
     }
 }

@@ -17,7 +17,11 @@ class vtUserDelete extends Command
      *
      * @var string
      */
-    protected $signature = 'vokke:user:delete {--uid= : User Id to delete.}';
+    protected $signature = 'vokke:user:delete
+                            {--uid= : User Id to delete.}
+                            {--all  : Remove all Product together with the user.}
+                            {--pid= : Product Id to delete together with the user.}
+                            ';
 
     /**
      * The console command description.
@@ -44,7 +48,7 @@ class vtUserDelete extends Command
     public function handle()
     {
         // Get CLI Input
-        $args = $this->getInputFromCLI( $this->options(), ["uid"] );
+        $args = $this->getInputFromCLI( $this->options(), ["uid", "pid", "all"] );
 
         ( new UserManagement( $args ) )->delete();
     }

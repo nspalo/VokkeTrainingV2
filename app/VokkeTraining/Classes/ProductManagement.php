@@ -3,19 +3,19 @@
 namespace App\VokkeTraining\Classes;
 
 // Doctrine
+
 use EntityManager;
 
 // VokkeTraining
-use App\VokkeTraining\Helpers\CommandHelpers;
-use App\VokkeTraining\Classes\IEntityManagement;
-//use App\VokkeTraining\Entities\User;
 use App\VokkeTraining\Entities\Product;
-//use App\VokkeTraining\Embeddables\Address;
-use App\VokkeTraining\Classes\UserManagement;
+use App\VokkeTraining\Helpers\CommandHelpers;
+use App\VokkeTraining\Helpers\DisplayHelpers;
+use App\VokkeTraining\Classes\IEntityManagement;
 
 class ProductManagement implements IEntityManagement
 {
     use CommandHelpers;
+    use DisplayHelpers;
 
     private $args;
 
@@ -38,20 +38,38 @@ class ProductManagement implements IEntityManagement
 
     public function show()
     {
-        // TODO: Implement show() method.
+        if( array_key_exists( "pid", $this->args ) )
+        {
+            $this->renderProduct( $this->get() );
+        }
+        else
+        {
+            $this->renderProducts( $this->getAll() );
+        }
     }
 
     public function create()
     {
-        $user = $this->createProduct();
+        $user = $this->getUser();
+        $product = $this->createProduct();
+        $message = "User was not found, Product was created!";
 
-        EntityManager::persist( $user );
+        if( ! is_null($user) )
+        {
+            $message = "Product was created and assigned to the User.";
+            $user->addProduct( $product );
+        }
+
+        $this->renderMessageCLI( $message );
+        EntityManager::persist( $product );
         EntityManager::flush();
     }
 
     public function delete()
     {
         $product = $this->get();
+        $this->renderMessageCLI( "Product was deleted." );
+
         EntityManager::remove( $product );
         EntityManager::flush();
     }
@@ -93,10 +111,11 @@ class ProductManagement implements IEntityManagement
 
     public function assignProduct()
     {
-        $user    = ( new UserManagement( $this->args ) )->get();
+        $user    = $this->getUser();
         $product = $this->get();
-
         $user->addProduct( $product );
+        $this->renderMessageCLI( "Product was assigned to User." );
+
         EntityManager::persist( $product );
         EntityManager::flush();
     }

@@ -2,6 +2,9 @@
 
 namespace App\VokkeTraining\Helpers;
 
+// Vokke Training
+use App\VokkeTraining\Classes\UserManagement;
+
 trait CommandHelpers
 {
     private $dummyProducts = array(
@@ -53,5 +56,10 @@ trait CommandHelpers
         }
 
         return $products;
+    }
+
+    public function getUser()
+    {
+        return ( new UserManagement( $this->args ) )->get();
     }
 }

@@ -27,7 +27,7 @@ class User
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=32, unique=true, nullable=false)
      */
     protected $name;
 
@@ -39,9 +39,11 @@ class User
 
     // @joinColumn onDelete="restrict"
     // @joinColumn onDelete="set null"
+    // OneToMany: orphanRemoval=true
+    // JoinColumn: onDelete="cascade"
     /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="user", cascade={"persist"})
-     * @JoinColumn(name="user_id", referencedColumnName="id", onDelete="restrict")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
      * @var ArrayCollection|Product[]
      */
     protected $products;
@@ -89,6 +91,21 @@ class User
             $product->setUser($this);
             $this->products->add($product);
         }
+    }
+
+    public function removeProduct( $index )
+    {
+        unset( $this->products[ $index ] );
+    }
+
+    public function removeProducts()
+    {
+        foreach ( $this->products as $index => $product )
+        {
+            $this->removeProduct( $index );
+        }
+
+        $this->products->clear();
     }
 
     /**

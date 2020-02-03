@@ -7,6 +7,7 @@ use EntityManager;
 
 // VokkeTraining
 use App\VokkeTraining\Helpers\CommandHelpers;
+use App\VokkeTraining\Helpers\DisplayHelpers;
 use App\VokkeTraining\Classes\IEntityManagement;
 use App\VokkeTraining\Entities\User;
 use App\VokkeTraining\Entities\Product;
@@ -15,7 +16,8 @@ use App\VokkeTraining\Embeddables\Address;
 class UserManagement implements IEntityManagement
 {
     use CommandHelpers;
-    
+    use DisplayHelpers;
+
     private $args;
     
     public function __construct( $args )
@@ -83,6 +85,7 @@ class UserManagement implements IEntityManagement
     public function create()
     {
         $user = $this->createUser();
+        $this->renderMessageCLI( "User was created." );
 
         EntityManager::persist( $user );
         EntityManager::flush();
@@ -90,7 +93,18 @@ class UserManagement implements IEntityManagement
     
     public function delete()
     {
+        /** @var User $user */
         $user = $this->get();
+//        $user->removeProducts();
+//        $products = $user->getProducts();
+//
+//        foreach ( $products as $key => $product )
+//        {
+//            $user->removeProduct( $key );
+//        }
+
+        $this->renderMessageCLI( "User was deleted." );
+
         EntityManager::remove( $user );
         EntityManager::flush();
     }
@@ -100,14 +114,14 @@ class UserManagement implements IEntityManagement
         if( array_key_exists( "uid", $this->args ) )
         {
             $user = $this->get();
-            $this->renderUserProduct( $user );
+            $this->renderUserProducts( $user );
         }
         else
         {
             $users = $this->getAll();
             foreach( $users as $user )
             {
-              $this->renderUserProduct( $user );
+              $this->renderUserProducts( $user );
             }
         }
     }
